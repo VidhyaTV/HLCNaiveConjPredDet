@@ -208,6 +208,9 @@ class UserHandler extends DefaultHandler
 					nwclock2.setClock(proc.getProcClock().getClock());
 					nwclock2.setClockPlusValue(sysathand.GetEpsilon());
 				}
+				//this was used for an earlier implementation where intervals were 
+				//reported as pairs of end-points and intervals during which the value of the local variable "x" 
+				//at a process was true were also referred to as true-intervals were reported as "Candidates"
 				//add candidate to process queue
 				proc.newCandidateOccurance(nwclock1,nwclock2);
 				//add changepoints to process queue
