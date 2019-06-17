@@ -213,7 +213,7 @@ class UserHandler extends DefaultHandler
 				//at a process was true were also referred to as true-intervals were reported as "Candidates"
 				//add candidate to process queue
 				proc.newCandidateOccurance(nwclock1,nwclock2);
-				//add changepoints to process queue
+				//add change-points to process queue
 				proc.newChangePoint(nwclock1,1);
 				proc.newChangePoint(nwclock2,-1);
 				
@@ -368,7 +368,7 @@ class UserHandler extends DefaultHandler
 		String nwfolder="";
 		BufferedWriter bwTemp =null,bw1=null,bw2=null,bw3=null;
 		/*****************print all candidates and changepoints of all the processes to see if change points are recorded correctly***************/
-		if (TraceHLCTimestampingOfflinePredDet.debugmode==1) {
+		if (TraceHLCTimestampingOfflinePredDet.debugmode==2) {
 			//For debugging purposes
 			nwfolder=TraceHLCTimestampingOfflinePredDet.inpfilename.substring(0, TraceHLCTimestampingOfflinePredDet.inpfilename.lastIndexOf('.')); //input file name without file extension
 			String snapshot_cand_file=nwfolder+"\\candidates"+TraceHLCTimestampingOfflinePredDet.clockmode+"_mode_"+TraceHLCTimestampingOfflinePredDet.mode+".txt";
