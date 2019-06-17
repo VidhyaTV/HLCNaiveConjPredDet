@@ -30,10 +30,15 @@ public class TraceHLCTimestampingOfflinePredDet
 	static int debugmode=0;
 	static int mode=0; //msg distribution mode
 	static String clockmode="HLC";
+	static int gamma = 0;//value by which right end point of the interval will be extended
 	public static void main(String[] args) 
 	{
 		try 
 		{	
+			if(args.length < 3) {
+				System.out.println("Expected number of arguments: 3. Provided "+args.length);
+				System.exit(0);
+			}
 			debugmode = Integer.parseInt(args[0]); //debugmode==1 is printing mode, debugmode == 2 only prints changepoints and candidates
 			mode=Integer.parseInt(args[1]); //if 2-different-msg-distr-mode, anything else is normal msg distribution mode..
 			if(mode==2)
@@ -58,6 +63,8 @@ public class TraceHLCTimestampingOfflinePredDet
 			}
 			*/
 			inpfilename="../predicate_a0.010000_e100_l0.100000_d10_v1_run0.xml";
+			//setting gamma to -1 here by providing -1 as the third input argument - will set it to epsilon below
+			gamma = Integer.parseInt(args[2]);
 			File inputFile = new File(inpfilename);
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser saxParser = factory.newSAXParser();//create XML parser instance
@@ -109,6 +116,11 @@ class UserHandler extends DefaultHandler
 			//System.out.println("System: epsilon=" + eps + ", number_of_processes=" +nproc);
 			sysathand.SetEpsilon(eps);
 			sysathand.SetNumberOfProcesses(nproc);
+			
+			//setting gamma to epsilon if the provided value is negative
+			if(TraceHLCTimestampingOfflinePredDet.gamma < 0) {
+				TraceHLCTimestampingOfflinePredDet.gamma = sysathand.GetEpsilon();
+			}
 			
 			if((TraceHLCTimestampingOfflinePredDet.mode==1)||(TraceHLCTimestampingOfflinePredDet.mode==2))
 			{
@@ -206,7 +218,7 @@ class UserHandler extends DefaultHandler
 					hlcvector2.add(0);
 					nwclock2=new HLC(hlcvector2);
 					nwclock2.setClock(proc.getProcClock().getClock());
-					nwclock2.setClockPlusValue(sysathand.GetEpsilon());
+					nwclock2.setClockPlusValue(TraceHLCTimestampingOfflinePredDet.gamma);
 				}
 				//this was used for an earlier implementation where intervals were 
 				//reported as pairs of end-points and intervals during which the value of the local variable "x" 
