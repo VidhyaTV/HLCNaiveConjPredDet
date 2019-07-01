@@ -62,7 +62,7 @@ public class TraceHLCTimestampingOfflinePredDet
 				System.exit(0);
 			}
 			*/
-			inpfilename="../predicate_a0.010000_e100_l0.100000_d10_v1_run0.xml";
+			inpfilename="predicate_a0.010000_e100_l0.100000_d10_v1_run0.xml";
 			//setting gamma to -1 here by providing -1 as the third input argument - will set it to epsilon below
 			gamma = Integer.parseInt(args[2]);
 			File inputFile = new File(inpfilename);
